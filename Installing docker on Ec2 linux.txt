@@ -1,0 +1,97 @@
+
+Install Docker on EC2 Linux , CentOS, RHEL, Fedora
+
+Amazon Elastic Computing Cloud also known as Amazon EC2 service offered by Amazon Web Services (AWS) is widely used service for provisioning instances on cloud. Recently, one of my colleague spinned up instance using Amazon Linux 2 Amazon Machine Image (AMI) to use Docker.
+
+Since the AMI doesn't contain Docker preinstalled, he has to install and configure Docker on his own. In this post, we will talk about the steps to install Docker on Amazon Linux 2 operating system.
+
+AWS EC2 AMI Details:
+AMI Name - Amazon Linux 2 AMI (HVM)
+AMI ID -00dc79254d0461090
+Bit - 64-bit x86
+Free-tier eligible - Yes
+
+[sunil-admin@terminal ~]$ cat /etc/os-release
+
+ 
+Output:
+
+NAME="Amazon Linux"
+VERSION="2"
+ID="amzn"
+ID_LIKE="centos rhel fedora"
+VERSION_ID="2"
+PRETTY_NAME="Amazon Linux 2"
+ANSI_COLOR="0;33"
+CPE_NAME="cpe:2.3:o:amazon:amazon_linux:2"
+HOME_URL="https://amazonlinux.com/"
+
+Steps to install Docker on Amazon Linux AMI, CentOS, Fedora & RHEL 64bit
+
+Step 1: Login into the server via SSH
+
+Step 2: Update the packages using YUM utility with sudo privileges 
+
+[sunil-admin@terminal ~]$ sudo yum update -y
+
+Step 3: Install Docker using YUM utility
+[sunil-admin@terminal ~]$ sudo yum install docker -y
+
+Step 4: Check the Docker engine version
+[sunil-admin@terminal ~]$ docker --version
+
+Step 5: Check if Docker service is running
+[sunil-admin@terminal ~]$ sudo docker info
+If Docker service is not running then start the Docker service
+
+[sunil-admin@terminal ~]$ sudo service docker start
+
+Step 6: Add user to the Docker group
+This is required so that user can execute the commands without using sudo privileges.
+
+[sunil-admin@terminal ~]$ sudo usermod -a -G docker geeks
+Logout and Log back in 
+
+In this command, the username is geeks and group name is docker. After successful execution of the command, logout and login with the user for changes to take effect..
+
+Step 7: Verify the installation by running some docker commands.
+[sunil-admin@terminal ~]$ docker info
+[sunil-admin@terminal ~]$ docker ps
+Command to enable starting of Docker service on boot:
+
+[sunil-admin@terminal ~]$ sudo systemctl enable docker
+Command to stop Docker service:
+
+[sunil-admin@terminal ~]$ sudo service docker stop
+
+
+Run any docker container from 
+sudo docker run docker/whalesay cowsay Hello-World!
+
+Unable to find image 'docker/whalesay:latest' locally
+latest: Pulling from docker/whalesay
+Image docker.io/docker/whalesay:latest uses outdated schema1 manifest format. Please upgrade to a schema2 image for better future compatibility. More information at https://docs.docker.com/registry/spec/deprecated-schema-v1/
+e190868d63f8: Pull complete
+909cd34c6fd7: Pull complete
+0b9bfabab7c1: Pull complete
+a3ed95caeb02: Pull complete
+00bf65475aba: Pull complete
+c57b6bcc83e3: Pull complete
+8978f6879e2f: Pull complete
+8eed3712d2cf: Pull complete
+Digest: sha256:178598e51a26abbc958b8a2e48825c90bc22e641de3d31e18aaf55f3258ba93b
+Status: Downloaded newer image for docker/whalesay:latest
+ ______________
+< Hello-Workd! >
+ --------------
+    \
+     \
+      \
+                    ##        .
+              ## ## ##       ==
+           ## ## ## ##      ===
+       /""""""""""""""""___/ ===
+  ~~~ {~~ ~~~~ ~~~ ~~~~ ~~ ~ /  ===- ~~~
+       \______ o          __/
+        \    \        __/
+          \____\______/
