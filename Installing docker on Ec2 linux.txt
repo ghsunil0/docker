@@ -95,3 +95,49 @@ Status: Downloaded newer image for docker/whalesay:latest
        \______ o          __/
         \    \        __/
           \____\______/
+
+
+Basic Docker Commands 
+
+docker commands : run, ps, ps -a, stop, rm, images, rmi, pull, run -d, attach 
+
+docker command --help           : This will give the complete details about the command
+
+docker run -d ubton sleep 200   : This will run ubton container detached mode
+                                      running the container in background
+       run -d redis:4.0         : will run redis version 4.0 
+docker attach (id)              : Will attach the previously detached running container
+
+       run -it webapp           : will run the webapp in interactive terminal mode
+       run --name "abc"         : will give a specific name 'abc' 
+                                   you can have only one container with that name 
+                                  To run it again with the same name you have the 
+                                     container no longer running and have to be removed
+                                     from history
+       run -p 80:5000          : will map port 80 to 5000
+       run -v /opt/data:/var/lib/mysql 
+                               :This command is to make the data persistant 
+                                   a. create /opt/data directory on server
+                                   b. run the container with -v option 
+                                   c. next time you run the container the data will 
+                                      be present in /opt/data directory
+docker ps                     : Will give information about running containers
+docker ps -a                  : Will give information about all running, stopped containers
+docker inspect mysql          : will give complete details about the container sql
+
+docker stop                   : will stop the running container
+docker rm                     : will remove the stopped container from history (ps -a)
+docker images                 : Will list all the images
+docker rmi                    : Will remove the image
+docker pull                   : will pull the container from the repository but not run it
+
+docker run webapp:blue        : will pass the value blue to container    
+     
+
+docker exe (container_id) actual_command 
+           Execute a command on running container 
+       Ex  docker run -d ubton sleep 200       (This will run ubton container detached) 
+           docker exe cia127..... cat /etc/*release*   (Will cat the release files from
+                                                          /etc directory ) 
+docker attach (container_id)   on running container will connect to the container
+
